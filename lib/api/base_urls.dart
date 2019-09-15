@@ -10,5 +10,5 @@ final String youtubeVideoBaseUrl = "https://www.youtube.com";
 final String youtubeImageBaseUrl = "https://img.youtube.com";
 final String youtubeVideoPath = "watch";
 final String youtubeVideoQueryParameter = "v";
-final String youtubeImagePath = "vi";
+final String youtubeImage = "$youtubeImageBaseUrl/vi/";
 final String youtubeImagePostfix = "0.jpg";

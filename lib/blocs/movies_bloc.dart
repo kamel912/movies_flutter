@@ -7,7 +7,7 @@ import 'package:inject/inject.dart';
 List<PublishSubject<BaseResponse<Movie>>> _moviesFetcher;
 
 class MoviesBloc {
-  final MoviesRepository _moviesRepository ;
+  final MoviesRepository _moviesRepository;
 
   final _types = [
     "popular",
@@ -18,7 +18,9 @@ class MoviesBloc {
 
   @provide
   @singleton
-  MoviesBloc(this._moviesRepository) {
+  MoviesBloc(
+    this._moviesRepository,
+  ) {
     _moviesFetcher = [
       PublishSubject<BaseResponse<Movie>>(),
       PublishSubject<BaseResponse<Movie>>(),
@@ -45,13 +47,12 @@ class MoviesBloc {
   }
 
   Observable<List<BaseResponse<Movie>>> get stream => Observable.zip4(
-    _moviesFetcher[0].stream,
-    _moviesFetcher[1].stream,
-    _moviesFetcher[2].stream,
-    _moviesFetcher[3].stream,
-    (a, b, c, d) {
-      return List.from([a, b, c, d]);
-    },
-  );
+        _moviesFetcher[0].stream,
+        _moviesFetcher[1].stream,
+        _moviesFetcher[2].stream,
+        _moviesFetcher[3].stream,
+        (a, b, c, d) {
+          return List.from([a, b, c, d]);
+        },
+      );
 }
-

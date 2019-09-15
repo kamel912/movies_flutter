@@ -5,17 +5,17 @@ import 'package:movies_flutter/models/response.dart';
 import 'package:movies_flutter/ui/main_screen/movies_list.dart';
 import 'package:inject/inject.dart';
 
-class MainList extends StatefulWidget {
+class MainScreen extends StatefulWidget {
   final MoviesBloc moviesBloc;
 
   @provide
-  MainList(this.moviesBloc);
+  MainScreen(this.moviesBloc);
 
   @override
-  _MainListState createState() => _MainListState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainListState extends State<MainList> {
+class _MainScreenState extends State<MainScreen> {
   final _titlesList = [
     "Popular",
     "Top rated",
@@ -51,7 +51,9 @@ class _MainListState extends State<MainList> {
             itemCount: moviesLists.length,
             itemBuilder: (context, index) {
               return _buildMoviesListWidget(
-                  _titlesList[index], moviesLists[index]);
+                _titlesList[index],
+                moviesLists[index],
+              );
             },
           );
         } else if (snapshot.hasError) {
@@ -65,19 +67,15 @@ class _MainListState extends State<MainList> {
   }
 
   Widget _buildMoviesListWidget(String listTitle, BaseResponse<Movie> data) {
-    return Container(
-      padding: EdgeInsets.all(8.00),
-      color: Colors.blueGrey[900],
-      child: MoviesList(
-        listTitle: listTitle,
-        moviesResponse: data,
-      ),
+    return MoviesList(
+      listTitle: listTitle,
+      moviesResponse: data,
     );
   }
 
   Widget _buildErrorWidget(String error) {
     return Container(
-      color: Colors.blueGrey[500],
+      color: Theme.of(context).primaryColorLight,
       child: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -90,10 +88,10 @@ class _MainListState extends State<MainList> {
 
   Widget _buildLoadingWidget() {
     return Container(
-      color: Colors.blueGrey[500],
+      color: Theme.of(context).primaryColorLight,
       child: Center(
         child: CircularProgressIndicator(
-          backgroundColor: Colors.yellowAccent,
+//          backgroundColor: Theme.of(context).accentColor,
         ),
       ),
     );

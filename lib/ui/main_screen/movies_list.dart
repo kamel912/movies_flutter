@@ -19,50 +19,68 @@ class MoviesList extends StatelessWidget {
   Widget build(BuildContext context) => _buildListItem(context);
 
   Widget _buildListItem(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
-      child: Container(
-        padding: EdgeInsets.all(8.00),
-        color: Theme.of(context).primaryColor,
-        height: 350.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              height: 30.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    listTitle,
+    return Container(
+      padding: EdgeInsets.all(8.00),
+      color: Theme.of(context).primaryColor,
+      height: 300.0,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Container(
+            height: 30.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  listTitle,
+                  style: TextStyle(
+                    fontSize: 25.00,
+                    color: Colors.white,
+                  ),
+                ),
+                InkWell(
+                  child: Text(
+                    'more...',
                     style: TextStyle(
-                      fontSize: 25.00,
+                      fontSize: 20.00,
                       color: Colors.white,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
-              height: 300.0,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: moviesResponse.results.length,
-                itemBuilder: (context, index) {
-                  return _buildMoviesList(moviesResponse.results[index]);
-                },
-              ),
+          ),
+          Container(
+            height: 250.0,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: moviesResponse.results.length,
+              itemBuilder: (context, index) {
+                return _buildMoviesList(moviesResponse.results[index], index);
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildMoviesList(Movie movie) => Container(
-        padding: EdgeInsets.all(8.0),
-        child: MovieItem(
-          movie: movie,
-        ),
-      );
+  Widget _buildMoviesList(Movie movie, int index) {
+    double _rightPadding;
+    if (index == (moviesResponse.results.length - 1)) {
+      _rightPadding = 0;
+    } else {
+      _rightPadding = 8.0;
+    }
+    return Container(
+      padding: EdgeInsets.only(
+        top: 8.0,
+        bottom: 8.0,
+        right: _rightPadding,
+      ),
+      child: MovieItem(
+        movie: movie,
+      ),
+    );
+  }
 }

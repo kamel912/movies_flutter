@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:inject/inject.dart';
 import 'package:movies_flutter/api/base_urls.dart';
 import 'package:movies_flutter/models/movie.dart';
+import 'package:movies_flutter/models/response.dart';
+import 'package:movies_flutter/models/movie_details_models.dart';
+import 'package:movies_flutter/ui/details_screen/trailer_item.dart';
 
+@provide
 class MovieDetailsScreen extends StatefulWidget {
   final Movie movie;
 
   const MovieDetailsScreen({
-    Key key,
     @required this.movie,
-  })  : assert(movie != null),
-        super(key: key);
+  }) : assert(movie != null);
 
   @override
   _MovieDetailsScreenState createState() {
@@ -19,9 +22,10 @@ class MovieDetailsScreen extends StatefulWidget {
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) =>
+      Scaffold(
         body: SafeArea(
-          top: false,
+          top: true,
           bottom: false,
           child: NestedScrollView(
             headerSliverBuilder:
@@ -94,10 +98,26 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       color: Colors.red,
                     ),
                   ),
+                  Container(margin: EdgeInsets.only(top: 8.0, bottom: 8.0)),
+                  StreamBuilder<BaseResponse<Trailer>>(
+//                    stream:bloc,
+                    builder: (context, snapshot){
+                      return ListView.builder(
+                          itemBuilder: (context, index){
+                            return TrailerItem(snapshot.data.results[index]);
+                          },
+                      );
+                  }
+
+                  ),
+
                 ],
               ),
             ),
           ),
-        ),
+        )
+
+        ,
+
       );
 }

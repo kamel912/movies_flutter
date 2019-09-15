@@ -13,3 +13,14 @@ class TrailersRepository {
   Future<BaseResponse<Trailer>> getTrailers(int movieId) =>
       apiProvider.getTrailers(movieId);
 }
+
+class ReviewsRepository {
+  final ApiProvider apiProvider;
+
+  @provide
+  @singleton
+  ReviewsRepository(this.apiProvider);
+
+  Future<BaseResponse<Review>> getReviews(int movieId) =>
+      apiProvider.getReviews(movieId);
+}
